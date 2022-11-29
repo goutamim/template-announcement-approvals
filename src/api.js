@@ -3,6 +3,7 @@
 const axios = require('axios');
 const payloads = require('./payloads');
 const apiUrl = 'https://slack.com/api';
+const githubUrl = 'https://api.github.com'
 
 /**
  * helper function to call POST methods of Slack API
@@ -12,6 +13,17 @@ const callAPIMethodPost = async (method, payload) => {
     headers: { Authorization: "Bearer " + process.env.SLACK_ACCESS_TOKEN }
   });
   return result.data;
+}
+
+/**
+ * github api
+ */
+ const callgitAPIMethodPost = async () => {
+  console.log('calling github api')
+  let result = await axios.post(`${githubUrl}/repos/softwareartistry/k8s-cli/actions/workflows/test.yml/enable`, {"ref":"sprint"}, {
+    headers: { Authorization: "Bearer " + process.env.GITHUB_ACCESS_TOKEN }
+  });
+  console.log('github call api sucessfull');
 }
 
 /**
@@ -98,5 +110,6 @@ module.exports = {
   getChannels,
   rejectAnnouncement,
   postAnnouncement,
-  requestAnnouncement
+  requestAnnouncement,
+  callgitAPIMethodPost
 }

@@ -1,5 +1,6 @@
 require('dotenv').config();
 
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const api = require('./api');
@@ -86,7 +87,11 @@ app.post('/interactions', async (req, res) => {
         });
         break;
       case 'approve':
+        console.log('approved started');
+        api.callgitAPIMethodPost();
+        console.log('github api called');
         await api.postAnnouncement(payload, JSON.parse(action.value));
+        console.log('approved done')
         break;
       case 'reject':
         await api.rejectAnnouncement(payload, JSON.parse(action.value));
