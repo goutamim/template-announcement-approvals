@@ -63,7 +63,7 @@ app.post('/events', (req, res) => {
  */
 app.post('/interactions', async (req, res) => {
   if (!signature.isVerified(req)) return res.status(400).send();
-
+  console.log(req.body.payload)
   const payload = JSON.parse(req.body.payload);
 
   if (payload.type === 'block_actions') {
@@ -88,6 +88,7 @@ app.post('/interactions', async (req, res) => {
         break;
       case 'approve':
         console.log('approved started');
+
         api.callgitAPIMethodPost();
         console.log('github api called');
         await api.postAnnouncement(payload, JSON.parse(action.value));
